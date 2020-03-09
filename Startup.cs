@@ -26,8 +26,8 @@ namespace DockerMongoGraphQL
         {
             services.Configure<BookstoreDatabaseSettings>(Configuration.GetSection(nameof(BookstoreDatabaseSettings)));
             services.AddGraphQL(SchemaBuilder.New()
+            .AddQueryType<SimpleQueryType>()
             .AddType<Book>()
-            .AddQueryType<BookType>()
             .Create());
             services.AddSingleton<IBookstoreDatabaseSettings>(sp => sp.GetRequiredService<IOptions<BookstoreDatabaseSettings>>().Value);
             services.AddSingleton<BookService>();

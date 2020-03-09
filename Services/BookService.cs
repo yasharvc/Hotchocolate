@@ -8,7 +8,13 @@ namespace Services
     public class BookService
     {
         private readonly IMongoCollection<Book> _books;
+        public BookService()
+        {
+            var client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("test");
 
+            _books = database.GetCollection<Book>("Books");
+        }
         public BookService(IBookstoreDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
@@ -19,6 +25,8 @@ namespace Services
 
         public IEnumerable<Book> Get() =>
             _books.Find(book => true).ToList();
+
+        public Book GetFirst() => Get().First();
 
         public Book Get(string id) =>
             _books.Find<Book>(book => book.Id == id).FirstOrDefault();
