@@ -10,10 +10,10 @@ namespace GraphQL{
     public class SimpleQueryType : ObjectType<Book> {
         protected override void Configure(IObjectTypeDescriptor<Book> descriptor)
         {
-            descriptor.Field("books").Type<ObjectType<Book>>().
+            descriptor.Field("books").Type<ListType<ObjectType<Book>>>().
             Resolver(ctx =>{
                 var service = ctx.Service<BookService>();
-                return service.GetFirst();
+                return service.Get();
             });
             descriptor.Field("test").Type<NonNullType<StringType>>().Resolver(ContextData=>{return "dasd";});
         }
