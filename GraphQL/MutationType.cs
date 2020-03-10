@@ -13,8 +13,7 @@ public class MutationType{
         respository=service;
     }
     public async Task<Book> CreateReview(
-                Book book,
-                [Service]IEventSender eventSender)
+                Book book)
             {
                 book = respository.Create(book);
                 //await eventSender.SendAsync(new OnCreateBook(book));
